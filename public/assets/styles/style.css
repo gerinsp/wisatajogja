@@ -1,0 +1,150 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Roboto Mono", monospace;
+  margin: 0;
+  padding: 0;
+}
+
+.text-center {
+  text-align: center;
+}
+
+h1,
+h2,
+h3 {
+  color: orange;
+}
+
+footer {
+  padding: 20px;
+  color: white;
+  background-color: #00a2c6;
+  text-align: center;
+  font-weight: bold;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+nav a {
+  font-size: 18px;
+  font-weight: 400;
+  text-decoration: none;
+  color: white;
+}
+
+nav a:hover {
+  color: orange;
+  font-weight: bold;
+}
+
+.featured-image {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.card {
+  box-shadow: 0 10px 8px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  padding: 20px;
+  width: 31.5%;
+  margin: 0 0 20px 0;
+  box-sizing: border-box;
+}
+
+.card h2 {
+  text-align:center;
+}
+
+.card img {
+  width: 370px;
+  height: 250px;
+}
+
+.card:first-child,
+.card:nth-child(2) {
+  margin-right: 30px;
+}
+
+.jumbotron {
+  text-align: center;
+  font-size: 20px;
+  color: white;
+}
+
+nav li {
+  display: inline;
+  list-style-type: none;
+  margin-right: 20px;
+}
+
+nav ul {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 30px;
+  margin-right: 10px;
+}
+
+.marque {
+  background-color: #00c8eb;
+  color: white;
+}
+
+nav {
+  background-color: #00a2c6;
+  padding: 5px;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+#content {
+  padding: 60px 20px 120px 20px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card-about {
+  width: 80%;
+  max-width: 600px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  border-radius:5px;
+}
+
+.card-about ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.card-about li {
+  margin-bottom: 8px;
+}
+
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: orange;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+  width: 185px;
+  height: 45px;
+}
+
+.button:hover {
+  background-color: #c66900;
+}
