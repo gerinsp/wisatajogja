@@ -28,4 +28,4 @@ jobs:
 
       - name: Upload files to FTP
         run: |
-          lftp -e "mirror -R -e -x .git/ -x .github/ -x .gitignore -x deploy.yml -x README.md -x .gitattributes -x .vscode/ -x .editorconfig -x '\*.md' ./htdocs/ /htdocs; quit" -u $FTP_USERNAME,$FTP_PASSWORD $FTP_SERVER
+          lftp -e "mirror -R -e -x .git/ -x .github/ -x .gitignore -x deploy.yml -x README.md -x .gitattributes -x .vscode/ -x .editorconfig -x '\*.md' ./htdocs/ /; quit" -u $FTP_USERNAME,$FTP_PASSWORD $FTP_SERVER
