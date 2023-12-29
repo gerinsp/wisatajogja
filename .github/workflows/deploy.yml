@@ -21,7 +21,8 @@ jobs:
       - name: Install lftp
         run: |
           apt-get update
-          apt-get install -y lftp
+          apt-get install -y --no-install-recommends lftp
+
 
       - name: Upload files to FTP
         run: |
