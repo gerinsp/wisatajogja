@@ -2,23 +2,27 @@ name: Deploy to FTP
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    container:
+      image: ubuntu:latest
+
     environment:
-      name: FTP SERVER
+      name: FTP_SERVER
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: Install lftp
+        run: |
+          apt-get update
+          apt-get install -y lftp
+
       - name: Upload files to FTP
         run: |
-          apt-get update -y
-          apt-get install -y lftp
           lftp -e "mirror -R -e -x .git/ -x .github/ -x .gitignore -x deploy.yml -x README.md -x .gitattributes -x .vscode/ -x .editorconfig -x '*.md' ./htdocs; quit" -u ${{ secrets.FTP_USERNAME }},$FTP_PASSWORD ${{ secrets.FTP_SERVER }}
