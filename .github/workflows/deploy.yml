@@ -1,30 +1,22 @@
-name: Deploy to FTP
-
 on:
   push:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
-
+    
 jobs:
-  deploy:
+  web-deploy:
+    name: 🎉 Deploy
     runs-on: ubuntu-latest
-
-    environment:
-      name: FTP SERVER
-
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Set up FTP connection
-        uses: actions/setup-ftp@v2
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          port: 21
-
-      - name: Upload files to FTP
-        run: |
-          lftp -e "mirror -R -e -x .git/ -x .github/ -x .gitignore -x deploy.yml -x README.md -x .gitattributes -x .vscode/ -x .editorconfig -x '*.md' ./htdocs; quit" -u $FTP_USERNAME,$FTP_PASSWORD $FTP_SERVER
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v3
+    
+    - name: 📂 Sync files
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ftpupload.net
+        username: if0_35686716
+        password: xthtsL4PQOn
+        port: 21
+        server-dir: ./htdocs/
