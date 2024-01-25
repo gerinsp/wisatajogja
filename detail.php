@@ -3,34 +3,32 @@
 $basePath = __DIR__;
 require_once 'admin/service/main_service.php';
 
-$result = getJenis();
+$result = detail();
+
+$resultJenis = mysqli_fetch_assoc($result['jenis']);
 
 include 'template/header.php';
 ?>
 
-<div class="marque">
-    <marquee behavior="scroll" direction="left">
-        Welcome to wisata yogyakarta
-    </marquee>
-</div>
-<div class="jumbotron" style="padding: 0px;">
-    <img src="public/assets/image/jogja2.jpg" title="Kota Jogja" width="100%" alt="logo" />
+<div class="text-center">
+    <h1><?php echo ucwords(strtolower($resultJenis['nama'])) ?></h1>
 </div>
 
 <div id="content">
-    <?php if ($result) {
-        while ($row = mysqli_fetch_assoc($result)) {
-    ?>
-    <div class="card" style="width: 415px;">
-        <header>
-            <h2><?php echo $row['nama'] ?></h2>
-            <img src="public/assets/image/<?php echo $row['img'] ?>" alt="">
-        </header>
-        <section>
-            <a class="button" href="detail?action=detail&id_jenis=<?php echo $row['id'] ?>">Lihat detail >></a>
-        </section>
-    </div>
-    <?php
+    <?php if ($result['result']) {
+        while ($row = mysqli_fetch_assoc($result['result'])) {
+            ?>
+            <div class="card" style="width: 415px;">
+                <header>
+                    <h2><?php echo $row['nama'] ?></h2>
+                    <img src="<?php echo $row['foto'] ?>" alt="">
+                </header>
+                <section>
+                    <h3>Deskripsi Singkat</h3>
+                    <p><?php echo $row['deskripsi'] ?></p>
+                </section>
+            </div>
+            <?php
         }
     }
     ?>
