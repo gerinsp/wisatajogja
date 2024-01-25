@@ -12,7 +12,7 @@
                   <h2>Amazing Yogyakarta</h2>
               </li>
               <li>
-                  <a style="margin-right: 30px;" href="/wisatajogja">Home</a>
+                  <a style="margin-right: 30px;" href="/">Home</a>
                   <a href="about">About Me</a></li>
               <li>
                   <img src="public/assets/image/logo.png" width="50px" alt="logo" />

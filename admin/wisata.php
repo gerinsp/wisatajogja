@@ -12,19 +12,19 @@ include 'template/header.php';
     <h2>Data Wisata</h2>
 
     <?php
-    if (isset($_SESSION['message']))  {
+     if (isset($_SESSION['message']))  {
     ?>
         <div class="alert alert-success">
             <span class="alert-close" onclick="this.parentElement.style.display='none';">&times;</span>
             <?php echo $_SESSION['message']; ?>
         </div>
     <?php
-        unset($_SESSION['message']);
-    }
+     unset($_SESSION['message']);
+     }
     ?>
 
     <a href="tambah" class="btn blue">Tambah</a>
-    <table class="data-table">
+    <table class="data-table" id="data-table">
         <thead>
         <tr>
             <th>ID</th>
@@ -37,10 +37,10 @@ include 'template/header.php';
         </thead>
         <tbody>
         <?php
-        if ($result) {
-            $i = 1;
-            while ($row = mysqli_fetch_assoc($result)) {
-        ?>
+         if ($result) {
+             $i = 1;
+             while ($row = mysqli_fetch_assoc($result)) {
+         ?>
             <tr>
                <td><?php echo $i++ ?></td>
                <td><img style="width: 60px;" src="<?php echo $row['foto'] ?>" alt="gambar objek wisata" /></td>
@@ -52,15 +52,15 @@ include 'template/header.php';
                    <a href="service/main_service.php?action=delete&id=<?php echo $row['id'] ?>" class="btn red" onclick="confirm('Apakah anda yakin akan menghapus data?')">Delete</a>
                </td>
             </tr>
-        <?php
-            }
-        }
+         <?php
+             }
+         }
         ?>
 
         </tbody>
     </table>
     <?php
-        if (mysqli_num_rows($result) == 0) { ?>
+         if (mysqli_num_rows($result) == 0) { ?>
         <p style="text-align: center">Tidak ada data.</p>
     <?php } ?>
 </div>
