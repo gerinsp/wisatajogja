@@ -36,10 +36,10 @@ include 'template/header.php';
                         <option value=""></option>
                         <?php
                         if ($result) {
-                         while ($row = mysql_fetch_assoc($result)) { ?>
-                            <option value="<?php echo $row['id'] ?>"><?php echo $row['nama'] ?></option>
+                            while ($row = mysqli_fetch_assoc($result)) { ?>
+                                <option value="<?php echo $row['id'] ?>"><?php echo $row['nama'] ?></option>
                         <?php
-                         }
+                            }
                         } ?>
                     </select>
                 </div>
@@ -59,4 +59,3 @@ include 'template/header.php';
 </div>
 
 <?php include 'template/footer.php' ?>
-

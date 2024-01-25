@@ -36,11 +36,18 @@ function detail()
     $query = "SELECT objek_wisata.*, jenis_wisata.nama as nama_jenis, jenis_wisata.id as id_jenis_wisata
               FROM objek_wisata 
               LEFT JOIN jenis_wisata ON objek_wisata.id_jenis = jenis_wisata.id 
-              WHERE objek_wisata.id_jenis = $id_jenis";
-    $result = mysql_query($query, $conn);
+              WHERE objek_wisata.id_jenis = ?";
+    
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $id_jenis);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    $query_jenis = "SELECT * FROM jenis_wisata WHERE id = $id_jenis";
-    $jenis = mysql_query($query_jenis, $conn);
+    $query_jenis = "SELECT * FROM jenis_wisata WHERE id = ?";
+    $stmt_jenis = $conn->prepare($query_jenis);
+    $stmt_jenis->bind_param("i", $id_jenis);
+    $stmt_jenis->execute();
+    $jenis = $stmt_jenis->get_result();
 
     return [
         'result' => $result,
@@ -56,15 +63,17 @@ function create()
     $req_deskripsi = $_POST['deskripsi'];
     $req_jenis = $_POST['jenis'];
 
-    $nama = mysql_real_escape_string($req_nama);
-    $deskripsi = mysql_real_escape_string($req_deskripsi);
-    $jenis = mysql_real_escape_string($req_jenis);
+    $nama = $conn->real_escape_string($req_nama);
+    $deskripsi = $conn->real_escape_string($req_deskripsi);
+    $jenis = $conn->real_escape_string($req_jenis);
 
     $fotoBase64 = base64_encode(file_get_contents($_FILES['foto']['tmp_name']));
     $fotoBase64 = 'data:image/jpeg;base64,' . $fotoBase64;
 
-    $query = "INSERT INTO objek_wisata (nama, id_jenis, deskripsi, foto) VALUES ('$nama', '$jenis', '$deskripsi', '$fotoBase64')";
-    $result = mysql_query($query, $conn);
+    $query = "INSERT INTO objek_wisata (nama, id_jenis, deskripsi, foto) VALUES (?, ?, ?, ?)";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("ssss", $nama, $jenis, $deskripsi, $fotoBase64);
+    $result = $stmt->execute();
     session_start();
 
     if ($result) {
@@ -78,7 +87,6 @@ function create()
     session_write_close();
 }
 
-
 function getAll()
 {
     global $conn;
@@ -87,11 +95,10 @@ function getAll()
               FROM objek_wisata 
               LEFT JOIN jenis_wisata ON objek_wisata.id_jenis = jenis_wisata.id";
 
-    $result = mysql_query($query, $conn);
+    $result = $conn->query($query);
 
     return $result;
 }
-
 
 function getById()
 {
@@ -102,8 +109,12 @@ function getById()
     $query = "SELECT objek_wisata.*, jenis_wisata.nama as nama_jenis, jenis_wisata.id as id_jenis 
               FROM objek_wisata 
               LEFT JOIN jenis_wisata ON objek_wisata.id_jenis = jenis_wisata.id 
-              WHERE objek_wisata.id = $id";
-    $result = mysql_query($query, $conn);
+              WHERE objek_wisata.id = ?";
+    
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     return $result;
 }
@@ -113,7 +124,7 @@ function getJenis()
     global $conn;
 
     $query = "SELECT * FROM jenis_wisata";
-    $result = mysql_query($query, $conn);
+    $result = $conn->query($query);
 
     return $result;
 }
@@ -127,19 +138,23 @@ function update()
     $req_deskripsi = $_POST['deskripsi'];
     $req_jenis = $_POST['jenis'];
 
-    $nama = mysql_real_escape_string($req_nama);
-    $deskripsi = mysql_real_escape_string($req_deskripsi);
-    $jenis = mysql_real_escape_string($req_jenis);
+    $nama = $conn->real_escape_string($req_nama);
+    $deskripsi = $conn->real_escape_string($req_deskripsi);
+    $jenis = $conn->real_escape_string($req_jenis);
 
     if (!empty($_FILES['foto']['tmp_name'])) {
         $fotoBase64 = base64_encode(file_get_contents($_FILES['foto']['tmp_name']));
         $fotoBase64 = 'data:image/jpeg;base64,' . $fotoBase64;
-        $query = "UPDATE objek_wisata SET nama='$nama', id_jenis='$jenis', deskripsi='$deskripsi', foto='$fotoBase64' WHERE id=$id";
+        $query = "UPDATE objek_wisata SET nama=?, id_jenis=?, deskripsi=?, foto=? WHERE id=?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("ssssi", $nama, $jenis, $deskripsi, $fotoBase64, $id);
     } else {
-        $query = "UPDATE objek_wisata SET nama='$nama', id_jenis='$jenis', deskripsi='$deskripsi' WHERE id=$id";
+        $query = "UPDATE objek_wisata SET nama=?, id_jenis=?, deskripsi=? WHERE id=?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("sssi", $nama, $jenis, $deskripsi, $id);
     }
 
-    $result = mysql_query($query, $conn);
+    $result = $stmt->execute();
 
     session_start();
 
@@ -160,8 +175,10 @@ function delete()
 
     $id = $_GET['id'];
 
-    $query = "DELETE FROM objek_wisata WHERE id = $id";
-    $result = mysql_query($query, $conn);
+    $query = "DELETE FROM objek_wisata WHERE id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $id);
+    $result = $stmt->execute();
 
     session_start();
 

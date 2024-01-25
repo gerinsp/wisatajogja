@@ -19,7 +19,7 @@ include 'template/header.php';
 
 <div id="content">
     <?php if ($result) {
-        while ($row = mysql_fetch_assoc($result)) {
+        while ($row = mysqli_fetch_assoc($result)) {
     ?>
     <div class="card" style="width: 415px;">
         <header>

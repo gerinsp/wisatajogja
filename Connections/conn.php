@@ -8,12 +8,14 @@ $database_conn = "if0_35859875_wisata_jogja";
 $username_conn = "if0_35859875";
 $password_conn = "y3I3pwNkdy";
 
-$conn = mysql_pconnect($hostname_conn, $username_conn, $password_conn) or trigger_error(mysql_error(),E_USER_ERROR);
+// Create connection
+$conn = new mysqli($hostname_conn, $username_conn, $password_conn, $database_conn);
 
-if (!$conn) {
-    die("Connection failed: " . mysql_error());
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 
-mysql_select_db($database_conn, $conn);
+// Now you can use $conn for your database operations
 
 ?>

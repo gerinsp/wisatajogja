@@ -5,7 +5,7 @@ require_once 'admin/service/main_service.php';
 
 $result = detail();
 
-$resultJenis = mysql_fetch_assoc($result['jenis']);
+$resultJenis = mysqli_fetch_assoc($result['jenis']);
 
 include 'template/header.php';
 ?>
@@ -16,7 +16,7 @@ include 'template/header.php';
 
 <div id="content">
     <?php if ($result['result']) {
-        while ($row = mysql_fetch_assoc($result['result'])) {
+        while ($row = mysqli_fetch_assoc($result['result'])) {
             ?>
             <div class="card" style="width: 415px;">
                 <header>

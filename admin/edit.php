@@ -3,7 +3,7 @@ $basePath = __DIR__;
 require_once 'service/main_service.php';
 
 $result = getById();
-$row = mysql_fetch_assoc($result);
+$row = mysqli_fetch_assoc($result);
 
 $jenis = getJenis();
 
@@ -38,7 +38,7 @@ include 'template/header.php';
                         <option value=""></option>
                         <?php
                         if ($jenis) {
-                            while ($val = mysql_fetch_assoc($jenis)) { ?>
+                            while ($val = mysqli_fetch_assoc($jenis)) { ?>
                                 <?php if ($val['id'] == $row['id_jenis']) { ?>
                                     <option value="<?php echo $val['id'] ?>" selected><?php echo $val['nama'] ?></option>
                                 <?php } else { ?>
@@ -66,4 +66,3 @@ include 'template/header.php';
 </div>
 
 <?php include 'template/footer.php' ?>
-
